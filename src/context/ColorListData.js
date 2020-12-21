@@ -1,4 +1,4 @@
-let ColorList = [
+let ColorListData = [
   {
     id: "100",
     name: "Red",
@@ -31,4 +31,4 @@ let ColorList = [
   },
 ];
 
-export default ColorList;
+export default ColorListData;

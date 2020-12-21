@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import ColorList from "../ColorList";
+// import ColorList from "../../context/ColorListData";
+import { useCurrentList } from "../../context/ColorListContext";
+import { useCurrentListUpdate } from "../../context/ColorListContext";
+
+import { useSelectedList } from "../../context/ColorListContext";
+import { useSelectedListUpdate } from "../../context/ColorListContext";
 
 function Dragable() {
-  const [currentList, updateList] = useState(ColorList);
-  const [selectedList, updateSelected] = useState([]);
+  //Context
+  const currentList = useCurrentList();
+  const updateList = useCurrentListUpdate();
+  const selectedList = useSelectedList();
+  const updateSelected = useSelectedListUpdate();
 
   // Check that limit is met
   const allowed = (destination, count, limit = 4) => {
@@ -72,7 +80,12 @@ function Dragable() {
     } else {
       if (allowed(destination, selectedList.length)) {
         // Move to other list
-        const moveListItems = move(getList(source.droppableId), getList(destination.droppableId), source, destination);
+        const moveListItems = move(
+          getList(source.droppableId),
+          getList(destination.droppableId),
+          source,
+          destination
+        );
         updateList(moveListItems.list1);
         updateSelected(moveListItems.list2);
       }
@@ -86,13 +99,25 @@ function Dragable() {
         <Droppable droppableId="list1" direction="horizontal">
           {(provided) => {
             return (
-              <ul ref={provided.innerRef} {...provided.droppableProps} className="characters">
+              <ul
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="characters"
+              >
                 {currentList.map(({ id, name, hex }, index) => {
                   return (
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
-                        <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className="color-box">
-                          <div className="color-box-square" style={{ backgroundColor: hex }}></div>
+                        <li
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          className="color-box"
+                        >
+                          <div
+                            className="color-box-square"
+                            style={{ backgroundColor: hex }}
+                          ></div>
                         </li>
                       )}
                     </Draggable>
@@ -107,13 +132,25 @@ function Dragable() {
         <Droppable droppableId="list2" direction="horizontal">
           {(provided) => {
             return (
-              <ul ref={provided.innerRef} {...provided.droppableProps} className="characters">
+              <ul
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="characters"
+              >
                 {selectedList.map(({ id, name, hex }, index) => {
                   return (
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
-                        <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className="color-box">
-                          <div className="color-box-square" style={{ backgroundColor: hex }}></div>
+                        <li
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          className="color-box"
+                        >
+                          <div
+                            className="color-box-square"
+                            style={{ backgroundColor: hex }}
+                          ></div>
                         </li>
                       )}
                     </Draggable>

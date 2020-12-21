@@ -1,11 +1,12 @@
 import Dragable from "./components/Dragable/";
+import ColorListContext from "./context/ColorListContext";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
+    <ColorListContext>
       <Dragable />
-    </div>
+    </ColorListContext>
   );
 }
 
