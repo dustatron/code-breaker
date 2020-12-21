@@ -1,11 +1,26 @@
 .list-box {
-  width: 50%;
 }
+
 ul {
-  text-decoration: none;
+  display: flex;
+  justify-content: center;
   width: 50%;
+  list-style-type: none;
+  border: 1px solid #333;
+  padding: 25px;
 }
-.item {
+li {
+  display: inline-block;
+}
+
+.color-box {
   border: 1px solid black;
+  padding: 10px;
+}
+
+.color-box-square {
+  width: 50px;
+  height: 50px;
+  border-radius: 7px;
   padding: 10px;
 }
