@@ -6,6 +6,20 @@ function Dragable() {
   const [currentList, updateList] = useState(ColorList);
   const [selectedList, updateSelected] = useState([]);
 
+  // Check that limit is met
+  const allowed = (destination, count, limit = 4) => {
+    if (count < limit) {
+      return true;
+    }
+
+    if (destination.droppableId === "list2" && count >= limit) {
+      return false;
+    }
+
+    return true;
+  };
+
+  // return list based on dragable id
   const getList = (listName) => {
     if (listName === "list1") {
       return currentList;
@@ -56,19 +70,20 @@ function Dragable() {
         updateList(newOrder);
       }
     } else {
-      // Move to other list
-      const moveListItems = move(getList(source.droppableId), getList(destination.droppableId), source, destination);
-
-      updateList(moveListItems.list1);
-      updateSelected(moveListItems.list2);
+      if (allowed(destination, selectedList.length)) {
+        // Move to other list
+        const moveListItems = move(getList(source.droppableId), getList(destination.droppableId), source, destination);
+        updateList(moveListItems.list1);
+        updateSelected(moveListItems.list2);
+      }
     }
   };
 
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <h2>List</h2>
-        <Droppable droppableId="list1">
+        <h2>Color Options</h2>
+        <Droppable droppableId="list1" direction="horizontal">
           {(provided) => {
             return (
               <ul ref={provided.innerRef} {...provided.droppableProps} className="characters">
@@ -77,7 +92,6 @@ function Dragable() {
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
                         <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className="color-box">
-                          {name}
                           <div className="color-box-square" style={{ backgroundColor: hex }}></div>
                         </li>
                       )}
@@ -90,7 +104,7 @@ function Dragable() {
           }}
         </Droppable>
         <h2>Selected</h2>
-        <Droppable droppableId="list2">
+        <Droppable droppableId="list2" direction="horizontal">
           {(provided) => {
             return (
               <ul ref={provided.innerRef} {...provided.droppableProps} className="characters">
@@ -99,7 +113,6 @@ function Dragable() {
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
                         <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className="color-box">
-                          {name}
                           <div className="color-box-square" style={{ backgroundColor: hex }}></div>
                         </li>
                       )}

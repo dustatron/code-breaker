@@ -22,7 +22,7 @@ let ColorList = [
   {
     id: "105",
     name: "White",
-    hex: "#f2f2f2",
+    hex: "#fff",
   },
   {
     id: "106",
