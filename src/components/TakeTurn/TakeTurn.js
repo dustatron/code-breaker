@@ -24,6 +24,7 @@ function TakeTurn() {
   const turnListUpdate = useTurnListUpdate();
 
   const gameStartedUpdate = useGameStartedUpdate();
+  const gameStarted = useGameStarted();
 
   const winUpdate = useWinUpdate();
 
@@ -36,17 +37,19 @@ function TakeTurn() {
     updateSelectedList([]);
     currentListUpdate(ColorListData);
 
-    if (turnList.length + 1 >= 2) {
-      console.log("end");
+    if (turnList.length + 1 >= 10) {
       gameStartedUpdate(false);
     }
-    console.log("turn", turnList.length);
   };
 
   return (
     <div>
-      <button onClick={handleTakeTurn}>
-        {selectedList.length >= 4 ? "Take Turn" : "Add Colors"}
+      <button
+        onClick={handleTakeTurn}
+        disabled={selectedList.length === 4 && gameStarted ? false : true}
+        className="color-picker-btn"
+      >
+        {selectedList.length >= 4 ? "Take Turn" : "Add 4 Colors"}
       </button>
     </div>
   );

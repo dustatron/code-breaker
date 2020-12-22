@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./vender/ridge-dark.css";
+import "./vender/ridge.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 

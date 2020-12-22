@@ -97,50 +97,17 @@ function Dragable() {
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <h2>Color Options</h2>
-        <Droppable droppableId="list1" direction="horizontal">
-          {(provided) => {
-            return (
-              <ul
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="characters"
-              >
-                {currentList.map(({ id, name, hex }, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {(provided) => (
-                        <li
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          className="color-box"
-                        >
-                          <div
-                            className="color-box-square"
-                            style={{ backgroundColor: hex }}
-                          ></div>
-                        </li>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-              </ul>
-            );
-          }}
-        </Droppable>
-        <h2>Selected</h2>
-        <Droppable droppableId="list2" direction="horizontal">
-          {(provided) => {
-            return (
-              <div>
+        <div className="color-picker">
+          <h2 className="color-picker-title">Color Options</h2>
+          <Droppable droppableId="list1" direction="horizontal">
+            {(provided) => {
+              return (
                 <ul
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="characters"
+                  className="color-picker-list"
                 >
-                  {selectedList.map(({ id, name, hex }, index) => {
+                  {currentList.map(({ id, name, hex }, index) => {
                     return (
                       <Draggable key={id} draggableId={id} index={index}>
                         {(provided) => (
@@ -161,11 +128,46 @@ function Dragable() {
                   })}
                   {provided.placeholder}
                 </ul>
-                {gameStarted && <TakeTurn />}
-              </div>
-            );
-          }}
-        </Droppable>
+              );
+            }}
+          </Droppable>
+          <h2 className="color-picker-title">Selected</h2>
+          <Droppable droppableId="list2" direction="horizontal">
+            {(provided) => {
+              return (
+                <div>
+                  <ul
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="color-picker-list"
+                  >
+                    {selectedList.map(({ id, name, hex }, index) => {
+                      return (
+                        <Draggable key={id} draggableId={id} index={index}>
+                          {(provided) => (
+                            <li
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              className="color-box"
+                            >
+                              <div
+                                className="color-box-square"
+                                style={{ backgroundColor: hex }}
+                              ></div>
+                            </li>
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
+                  </ul>
+                  <div>{gameStarted && <TakeTurn />}</div>
+                </div>
+              );
+            }}
+          </Droppable>
+        </div>
       </DragDropContext>
     </>
   );

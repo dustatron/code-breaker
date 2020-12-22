@@ -42,6 +42,7 @@ function MasterCode() {
   };
 
   const handleStartGame = () => {
+    winStateUpdate(false);
     gameStartedUpdate(true);
     masterCodeUpdate(generateCode());
   };
@@ -53,15 +54,41 @@ function MasterCode() {
   };
 
   return (
-    <div>
+    <div className="top">
       {winState ? <h2>You Win</h2> : ""}
-      {!gameStarted && masterCode.length > 0
-        ? masterCode.map((color) => color.name)
-        : "Set Code"}
-      <button onClick={handleStartGame}>
-        {gameStarted ? "Restart Game" : "Start Game"}
-      </button>
-      {gameStarted && <button onClick={handleEndGame}> End Game</button>}
+
+      <div className="top-code-row">
+        {!gameStarted && masterCode.length > 0 && (
+          <div className="top-code-row--title">Master Code:</div>
+        )}
+        {!gameStarted && masterCode.length === 0 && (
+          <div className="top-code-row--title"> Start The Game </div>
+        )}
+        {gameStarted && (
+          <div className="top-code-row--title"> Break The Code </div>
+        )}
+        <div className="top-code-row--color">
+          {/* Game End & show master code  */}
+          {!gameStarted &&
+            masterCode.length > 0 &&
+            masterCode.map((color) => (
+              <div
+                className="top-code-row--color-boxes"
+                style={{ backgroundColor: color.hex }}
+              ></div>
+            ))}
+        </div>
+      </div>
+      <div className="top-button-row">
+        <button className="top-button-row--btn" onClick={handleStartGame}>
+          {gameStarted ? "Restart Game" : "Start Game"}
+        </button>
+        {gameStarted && (
+          <button className="top-button-row--btn" onClick={handleEndGame}>
+            End Game
+          </button>
+        )}
+      </div>
     </div>
   );
 }

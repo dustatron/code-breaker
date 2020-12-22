@@ -2,7 +2,7 @@ import Dragable from "./components/Dragable/";
 import MasterCode from "./components/MasterCode";
 import TurnList from "./components/TurnList";
 
-import "./App.css";
+import "./App.scss";
 
 function App() {
   return (

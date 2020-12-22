@@ -28,39 +28,45 @@ function TurnList() {
   };
 
   return (
-    <div>
+    <div className="turns">
       {listOfTurns &&
         listOfTurns.map((turn, index) => {
           const id = v4();
           return (
-            <ul key={id}>
-              <span> Turn {listOfTurns.length - index}</span>
-              {turn.map((color) => {
-                const id = v4();
-                return (
-                  color && (
-                    <li key={id} className="color-box">
-                      <div
-                        className="color-box-square"
-                        style={{ backgroundColor: color.hex }}
-                      ></div>
-                    </li>
-                  )
-                );
-              })}
-              {handleClue(turn).map((clue) => {
-                const id = v4();
-                return (
-                  <div
-                    key={id}
-                    className="clue"
-                    style={{ backgroundColor: clue }}
-                  >
-                    {" "}
-                  </div>
-                );
-              })}
-            </ul>
+            <div key={id} className="turns-list">
+              <div className="turns-list-number">
+                Turn {listOfTurns.length - index}
+              </div>
+              <ul className="turns-list-ul">
+                {turn.map((color) => {
+                  const id = v4();
+                  return (
+                    color && (
+                      <li key={id} className="color-box">
+                        <div
+                          className="color-box-square"
+                          style={{ backgroundColor: color.hex }}
+                        ></div>
+                      </li>
+                    )
+                  );
+                })}
+              </ul>
+              <div className="turns-list-clue">
+                {handleClue(turn).map((clue) => {
+                  const id = v4();
+                  return (
+                    <div
+                      key={id}
+                      className="turns-list-clue-square"
+                      style={{ backgroundColor: clue }}
+                    >
+                      {" "}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           );
         })}
     </div>
