@@ -1,15 +1,29 @@
 import React from "react";
+
 import { useMasterCode } from "../../context/GameContext";
 import { useMasterCodeUpdate } from "../../context/GameContext";
+
+import { useWin } from "../../context/GameContext";
+import { useWinUpdate } from "../../context/GameContext";
+
+import { useGameStarted } from "../../context/GameContext";
+import { useGameStartedUpdate } from "../../context/GameContext";
+
+import { useTurnListUpdate } from "../../context/TurnContext";
+
 import ColorListData from "../../data/ColorListData";
 
 function MasterCode() {
-  const masterColors = ColorListData.map((color) => {
-    return color.name;
-  });
-
   const masterCode = useMasterCode();
   const masterCodeUpdate = useMasterCodeUpdate();
+
+  const gameStarted = useGameStarted();
+  const gameStartedUpdate = useGameStartedUpdate();
+
+  const winState = useWin();
+  const winStateUpdate = useWinUpdate();
+
+  const turnListUpdate = useTurnListUpdate();
 
   const generateCode = () => {
     let result = [];
@@ -28,16 +42,26 @@ function MasterCode() {
   };
 
   const handleStartGame = () => {
+    gameStartedUpdate(true);
     masterCodeUpdate(generateCode());
   };
+
+  const handleEndGame = () => {
+    winStateUpdate(false);
+    gameStartedUpdate(false);
+    turnListUpdate([], true);
+  };
+
   return (
     <div>
-      <div>
-        {masterCode.map((color) => (
-          <p>{color.name} </p>
-        ))}
-      </div>
-      <button onClick={handleStartGame}>Start Game</button>
+      {winState ? <h2>You Win</h2> : ""}
+      {!gameStarted && masterCode.length > 0
+        ? masterCode.map((color) => color.name)
+        : "Set Code"}
+      <button onClick={handleStartGame}>
+        {gameStarted ? "Restart Game" : "Start Game"}
+      </button>
+      {gameStarted && <button onClick={handleEndGame}> End Game</button>}
     </div>
   );
 }

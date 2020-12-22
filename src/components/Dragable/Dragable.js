@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import TakeTurn from "../TakeTurn";
+import { useGameStarted } from "../../context/GameContext";
 // import ColorList from "../../context/ColorListData";
 import { useCurrentList } from "../../context/ColorListContext";
 import { useCurrentListUpdate } from "../../context/ColorListContext";
@@ -13,6 +14,7 @@ function Dragable() {
   const updateList = useCurrentListUpdate();
   const selectedList = useSelectedList();
   const updateSelected = useSelectedListUpdate();
+  const gameStarted = useGameStarted();
 
   // Check that limit is met
   const allowed = (destination, count, limit = 4) => {
@@ -132,32 +134,35 @@ function Dragable() {
         <Droppable droppableId="list2" direction="horizontal">
           {(provided) => {
             return (
-              <ul
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="characters"
-              >
-                {selectedList.map(({ id, name, hex }, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {(provided) => (
-                        <li
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          className="color-box"
-                        >
-                          <div
-                            className="color-box-square"
-                            style={{ backgroundColor: hex }}
-                          ></div>
-                        </li>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-              </ul>
+              <div>
+                <ul
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="characters"
+                >
+                  {selectedList.map(({ id, name, hex }, index) => {
+                    return (
+                      <Draggable key={id} draggableId={id} index={index}>
+                        {(provided) => (
+                          <li
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                            className="color-box"
+                          >
+                            <div
+                              className="color-box-square"
+                              style={{ backgroundColor: hex }}
+                            ></div>
+                          </li>
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                  {provided.placeholder}
+                </ul>
+                {gameStarted && <TakeTurn />}
+              </div>
             );
           }}
         </Droppable>

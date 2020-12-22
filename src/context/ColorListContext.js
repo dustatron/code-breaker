@@ -12,7 +12,6 @@ export const selectedListUpdateContext = createContext();
 export const useCurrentList = () => {
   return useContext(currentListContext);
 };
-
 export const useCurrentListUpdate = () => {
   return useContext(currentListUpdateContext);
 };
