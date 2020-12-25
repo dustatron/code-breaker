@@ -1,6 +1,11 @@
+#root {
+  display: flex;
+  justify-content: center;
+}
+
 .App {
-  width: 50%;
-  margin: auto;
+  width: 80%;
+  // margin: 0 auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -11,22 +16,30 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 1.6rem;
 
   &-code-row {
-    width: 90%;
+    width: 100%;
     min-height: 3rem;
     text-align: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    background-color: rgba(198, 198, 198, 0.193);
-    border-radius: 10px;
+    background: inherit;
+
+    &:before {
+      box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+      filter: blur(10px);
+    }
+
     &--title {
       text-align: center;
       font-weight: 800;
       width: 90%;
       padding: 0.5rem;
+      color: white;
+      font-size: 1.6rem;
     }
 
     &--color {
@@ -55,10 +68,42 @@
 }
 
 .color-picker {
-  border: 1px solid white;
+  background: inherit;
+  border: 4px solid rgba(255, 255, 255, 0.3);
   border-radius: 7px;
-  padding: 10px;
+  padding: 15px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .16);
+  margin-bottom: 1.6rem;
+
+
+  &:before {
+      filter: blur(10px);
+  }
+
+  &--game-over {
+    background-color: rgba(67, 67, 67, 0.81);
+    // background-blend-mode: lighten;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-title {
+      color: rgb(255, 255, 255);
+      font-weight: 800;
+      font-size: 100px;
+      line-height: 5rem;
+    }
+
+  }
 
   &-title {
     text-align: center;
@@ -87,30 +132,61 @@
 
 .turns {
   padding: 10px;
-  &-list {
-    border-bottom: 1px solid white;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  color: white;
+  background: rgba(240, 240, 240, 0.056);
+  min-height: 9rem;
+
+  &--top-labels {
     display: flex;
+    justify-content: space-between;
+    padding: 16px 14px;
+    font-weight: 500;
+    background-color: rgba(38, 38, 38, 0.637);
+    div {
+      text-align: center;
+    }
+  }
+
+  &-list {
+    color: white;
+    border-bottom: 2px solid rgba(225, 225, 225, 0.467);
+    margin-bottom: 5px;
+    display: flex;
+    // width: 100%;
+    justify-content: space-between;
     &-number {
       display: flex;
       align-items: center;
       text-transform: uppercase;
       font-weight: 700;
+      width: 16%;
+      padding-left: 5px;
     }
 
     &-ul {
       list-style-type: none;
       display: flex;
+      width: 70%;
     }
+
     &-clue {
       padding: 10px;
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
       width: 70px;
+      position: relative;
+      background-color: rgba(225, 225, 225, 0.467);
+      
       &-square {
         width: 15px;
         height: 15px;
         padding: 5px;
-        margin: 2px;
+        margin: 4px;
         border-radius: 5px;
       }
     }
@@ -129,4 +205,73 @@
   padding: 5px;
   margin: 5px;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.tool-tip {
+  background: inherit;
+  color: #333;
+  padding:15px;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: -40px;
+  left: 80px;
+  opacity: 0;
+  transition: opacity 1s;
+  border-radius: 7px;
+  font-weight: 600;
+  &:before {
+      box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+      filter: blur(10px);
+  }
+
+  &--triangle {
+    position: absolute;
+    top: 40%;
+    left: -13px;
+    width: 0; 
+    height: 0; 
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent; 
+    border-right:13px solid rgba(255, 255, 255, 0.40); 
+
+  }
+  
+  &--message {
+    display: flex;
+    // justify-content: space-between;
+    padding: 10px;
+    &-box {
+      padding: 10px;
+      margin-right: 10px;
+      border-radius: 7px;
+    }
+    width: 250px;
+  }
+}
+
+.show {
+  opacity: 1;
+}
+
+.white { 
+  background-color: white;
+}
+
+.black {
+  background-color: #333;
+}
+
+
+@media only screen 
+  // and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+  #root {
+    display: initial;
+  }
+
+  .App {
+    width: auto;
+  }
 }
