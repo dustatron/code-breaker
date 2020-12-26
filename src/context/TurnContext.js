@@ -18,6 +18,7 @@ function TurnContext({ children }) {
     if (restart) {
       return updateTurnList([]);
     }
+    // add new color guess to start of array
     const newTurnList = [newTurn, ...turnList];
     updateTurnList(newTurnList);
   };
